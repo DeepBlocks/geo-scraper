@@ -2,7 +2,10 @@
 
 domain = "data.cityofnewyork.us"
 tags = ["doittgis", "doitt gis", "gis"]
-path = "downloads/nyc_ny/"
+
+# Path is likely C:/Users/[Username]/Downloads/[city_state]/ for Windows
+# or ~/Downloads/[city_state]/ for Mac
+path = "G:/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/nyc_ny/"
 
 # Warning: Do not modify anything below this line unless you know what you are doing!
 
