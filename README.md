@@ -14,7 +14,9 @@ The arcgis scraper should work for most websites that run on arcgis.
 ![](/assets/images/view-api-resources.png)
 6. In the URL bar, delete everything after "services/" (Highlighted in blue below)
 ![](/assets/images/URL-bar.png)
-7. Open the program you downloaded with any text editor
+7. Open the program you downloaded with any text editor (DO NOT DOUBLE CLICK THE PROGRAM)
+    - Windows: Right click the program, then hover over "Open with" and click Notepad
+    - Mac: Right click the program, then hover over "Open with" and click TextEdit
 8. Change `url` to the new URL you just got (make sure to keep the quotation marks)
 9. Change `path` to fit your needs
 10. Open command prompt (if on Windows) or terminal (if on Mac)
