@@ -20,5 +20,6 @@ The arcgis scraper should work for most websites that run on arcgis.
 8. Change `path` to fit your needs
 9. Open command prompt (if on Windows) or terminal (if on Mac)
 10. Type `cd Downloads/`
-11. Type `python arcgis-scraper.py`
+11. Type `python arcgis-scraper.py` and wait for the program to output `Done!`
 12. Copy the new folder into the shared Google Drive
+13. If there is an error message, copy the error messages, double click the "Notes" column in the Google Sheets, and paste the error message
