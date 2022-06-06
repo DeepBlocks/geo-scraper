@@ -1,8 +1,8 @@
 ### Parameters: modify these variables to fit your purpose ###
 
 # path will be different for everyone depending on where this script is located
-# most likely C:/Users/[USERNAME]/Downloads/[city_state] for Windows users
-# or ~/Downloads/[city_state] for Mac users
+# most likely C:/Users/[USERNAME]/Downloads/[city_state]/ for Windows users
+# or ~/Downloads/[city_state]/ for Mac users
 path = "/mnt/g/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/long_beach_ca/"
 
 url = "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/"
