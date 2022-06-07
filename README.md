@@ -5,6 +5,8 @@
 
 [Opendata Scraper](/README.md#opendata-scraper)
 
+[How to tell if a site is arcgis or opendata](/README.md#how-to-tell-if-a-site-is-arcgis-or-opendata)
+
 ## Arcgis Scraper
 The arcgis scraper should work for most websites that run on arcgis.
 
