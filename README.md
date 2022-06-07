@@ -18,7 +18,7 @@ The arcgis scraper should work for most websites that run on arcgis.
 4. Click on "View Data Source," then click on the "View" button next to GeoJSON
 ![](/assets/images/view-storage.png)
 5. At the top, click Home and copy the URL
-6. Download arcgis-scraper.py and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
+6. Download arcgis-scraper.py from Releases and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
     - Windows: Right click the program, then hover over "Open with" and click Notepad
     - Mac: Right click the program, then hover over "Open with" and click TextEdit
 7. Change `url` to the new URL you just got (make sure to keep the quotation marks and the / after `services`)
@@ -33,7 +33,7 @@ The arcgis scraper should work for most websites that run on arcgis.
 The opendata scraper should work for most websites that use the Open Data Network (typically the URL would start with data e.g. [data.oaklandca.gov](https://data.oaklandca.gov/))
 
 ### Instructions
-1. Download opendata-scraper.py and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
+1. Download opendata-scraper.py from Releases and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
     - Windows: Right click the program, then hover over "Open with" and click Notepad
     - Mac: Right click the program, then hover over "Open with" and click TextEdit
 2. Copy the URL excluding https:// and any slashes (i.e. only copy data.example.com, not https://data.example.com/pages)
