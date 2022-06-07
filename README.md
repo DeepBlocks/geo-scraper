@@ -21,6 +21,7 @@ The arcgis scraper should work for most websites that run on arcgis.
 6. Download arcgis-scraper.py from Releases and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
     - Windows: Right click the program, then hover over "Open with" and click Notepad
     - Mac: Right click the program, then hover over "Open with" and click TextEdit
+![](/assets/images/releases.png)
 7. Change `url` to the new URL you just got (make sure to keep the quotation marks and the / after `services`)
 8. Change `path` to fit your needs
 9. Open command prompt (if on Windows) or terminal (if on Mac)
@@ -36,6 +37,7 @@ The opendata scraper should work for most websites that use the Open Data Networ
 1. Download opendata-scraper.py from Releases and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
     - Windows: Right click the program, then hover over "Open with" and click Notepad
     - Mac: Right click the program, then hover over "Open with" and click TextEdit
+![](/assets/images/releases.png)
 2. Copy the URL excluding https:// and any slashes (i.e. only copy data.example.com, not https://data.example.com/pages)
 3. In the code, change `domain` to the URL you copied
 4. Change `path` to your path
