@@ -45,3 +45,8 @@ The opendata scraper should work for most websites that use the Open Data Networ
 6. Type `cd Downloads/`
 7. Type `python opendata-scraper.py`
 8. Copy the new folder into the shared Google Drive
+
+## How to tell if a site is arcgis or opendata
+Click on the search field. If the word "Data" appears underneath, then the site likely uses arcgis.
+![](/assets/images/search.png)
+This site uses arcgis because the word "Data" appears.
