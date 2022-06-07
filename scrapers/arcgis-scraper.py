@@ -3,9 +3,10 @@
 # path will be different for everyone depending on where this script is located
 # most likely C:/Users/[USERNAME]/Downloads/[city_state]/ for Windows users
 # or ~/Downloads/[city_state]/ for Mac users
-path = "/mnt/g/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/long_beach_ca/"
+path = "G:/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/doral_fl/"
 
-url = "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/"
+# Make sure to include the / after services
+url = "https://services.arcgis.com/rMDYWPzHhH9byMxO/arcgis/rest/services/"
 
 ### Warning: Do not modify anything below this line unless you know what you are doing! ###
 
@@ -13,11 +14,20 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import re
 import os
+from os.path import exists
+import csv
+
+from requests import RequestException
+
+links = {}
 
 def loadPage(url):
     #print(url)
     req = Request(url)
-    html_page = urlopen(req)
+    try:
+        html_page = urlopen(req)
+    except Request.URLError:
+        raise Request.URLError('Failed to load' + url)
     return BeautifulSoup(html_page, "lxml")
 
 def findLinks(url, searched, depth):
@@ -27,44 +37,86 @@ def findLinks(url, searched, depth):
     searched.append(url)
     soup = loadPage(url)
     
-    links = {}
     for link in soup.findAll('a'):
         href = link.get('href')
-        name = link.get_text()
+        name = link.get_text().strip()
         if not href.startswith('https://'):
             href = domain + href
         #print(searched)
         if 'FeatureServer' in href or 'MapServer' in href:
-            if name not in links.keys() or 'MapServer' in links[name]:
-                links[name] = href
-                searched.append(href)
+            links.update(getLayers(href, name + '/'))
+            searched.append(href)
         elif ('services/' in href) and ('?' not in href) and (
             href not in searched) and (href != url):
             searched.append(href)
-            links.update(findLinks(href, searched, depth - 1))
-    
+            findLinks(href, searched, depth - 1)
+
+def getLayers(url, path):
+    soup = loadPage(url)
+    for link in soup.findAll('a'):
+        href = link.get('href')
+        endIndex = 0
+        if '?' in href:
+            endIndex = href.find('?')
+        else:
+            endIndex = len(href)
+        if href[href.rfind('Server/') + 7:endIndex].isnumeric():
+            name = path + link.get_text().strip()
+            if name not in links.keys() or 'MapServer' in links[name]:
+                if not href.startswith('https://'):
+                    href = domain + href
+                links[name] = href
+                print(name)
     return links
+    
+def cleanName(name):
+    name = name.replace('<', "%3C")
+    name = name.replace('>', "%3E")
+    name = name.replace(':', "%3A")
+    name = name.replace('"', "%22")
+    name = name.replace('|', "%7C")
+    name = name.replace('?', "%3F")
+    name = name.replace('*', "%2A")
+    return name
+
+
+# Main Program
 
 domain = url[:url.find('/', 8)]
+if not os.path.exists(path):
+        os.makedirs(path)
 
-links = findLinks(url, [], 3)
+print("Scanning for links...")
+if not exists(path + "links.csv"):
+    findLinks(url, [], 4)
+    f = open(path + 'links.csv', 'w')
+    f.write("name,href\n")
+    for entry in links.keys():
+        f.write('"' + entry + '",' + links[entry] + "\n")
+    f.close()
+else:
+    with open(path + "links.csv", 'r', encoding="utf8") as f:
+        csv_reader = csv.DictReader(f)
+        #next(csv_reader)
+        for line in csv_reader:
+            links[line['name']] = line['href']
 
-#print(links)
+
 
 loadErrors = []
 unicodeErrors = []
 
+print("Downloading data...")
 for page in links.keys():
     loaded = False
     
     index = page.rfind('/')
-    newPath = page[:index + 1]
-    pageName = page[index + 1:]
+    newPath = cleanName(page[:index + 1])
     
     if not os.path.exists(path + newPath):
         os.makedirs(path + newPath)
     
-    geoURL = links[page] + "/0/query?outFields=*&where=1%3D1&f=geojson"
+    geoURL = links[page] + "/query?outFields=*&where=1%3D1&f=geojson"
     print(geoURL)
     soup = None
     try:
@@ -74,7 +126,7 @@ for page in links.keys():
         print("Failed to load " + page)
         loadErrors.append(page)
     if loaded == True:
-        out = open(path + page + ".gjson", "w")
+        out = open(path + cleanName(page) + ".geojson", "w")
         try:
             out.write(soup.get_text())
         except UnicodeEncodeError:
