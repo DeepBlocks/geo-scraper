@@ -3,14 +3,15 @@
 # path will be different for everyone depending on where this script is located
 # most likely C:/Users/[USERNAME]/Downloads/[city_state]/ for Windows users
 # or ~/Downloads/[city_state]/ for Mac users
-path = "G:/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/doral_fl/"
+path = "G:/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/philadelphia_pa/"
 
 # Make sure to include the / after services
-url = "https://services.arcgis.com/rMDYWPzHhH9byMxO/arcgis/rest/services/"
+url = "https://services.arcgis.com/fLeGjb7u4uXqeF9q/ArcGIS/rest/services"
 
 ### Warning: Do not modify anything below this line unless you know what you are doing! ###
 
 from bs4 import BeautifulSoup
+import urllib
 from urllib.request import Request, urlopen
 import re
 import os
@@ -26,8 +27,8 @@ def loadPage(url):
     req = Request(url)
     try:
         html_page = urlopen(req)
-    except Request.URLError:
-        raise Request.URLError('Failed to load' + url)
+    except urllib.error.URLError:
+        raise urllib.error.URLError('Failed to load ' + url)
     return BeautifulSoup(html_page, "lxml")
 
 def findLinks(url, searched, depth):
@@ -40,14 +41,13 @@ def findLinks(url, searched, depth):
     for link in soup.findAll('a'):
         href = link.get('href')
         name = link.get_text().strip()
-        if not href.startswith('https://'):
+        if not href.startswith('https://') and not href.startswith('http://'):
             href = domain + href
         #print(searched)
         if 'FeatureServer' in href or 'MapServer' in href:
             links.update(getLayers(href, name + '/'))
             searched.append(href)
-        elif ('services/' in href) and ('?' not in href) and (
-            href not in searched) and (href != url):
+        elif ('services/' in href) and (href not in searched) and (href != url) and href.startswith(domain):
             searched.append(href)
             findLinks(href, searched, depth - 1)
 
@@ -61,7 +61,7 @@ def getLayers(url, path):
         else:
             endIndex = len(href)
         if href[href.rfind('Server/') + 7:endIndex].isnumeric():
-            name = path + link.get_text().strip()
+            name = path + link.get_text().strip().replace('/','%2F')
             if name not in links.keys() or 'MapServer' in links[name]:
                 if not href.startswith('https://'):
                     href = domain + href
@@ -116,23 +116,24 @@ for page in links.keys():
     if not os.path.exists(path + newPath):
         os.makedirs(path + newPath)
     
-    geoURL = links[page] + "/query?outFields=*&where=1%3D1&f=geojson"
-    print(geoURL)
-    soup = None
-    try:
-        soup = loadPage(geoURL)
-        loaded = True
-    except:
-        print("Failed to load " + page)
-        loadErrors.append(page)
-    if loaded == True:
-        out = open(path + cleanName(page) + ".geojson", "w")
+    if not exists(path + cleanName(page) + ".geojson"):
+        geoURL = links[page] + "/query?outFields=*&where=1%3D1&f=geojson"
+        print(geoURL)
+        soup = None
         try:
-            out.write(soup.get_text())
-        except UnicodeEncodeError:
-            print("Failed to write to file " + page + ".gjson. Try downloading the file manually.")
-            unicodeErrors.append(page)
-        out.close()
+            soup = loadPage(geoURL)
+            loaded = True
+        except:
+            print("Failed to load " + page)
+            loadErrors.append(page)
+        if loaded == True:
+            out = open(path + cleanName(page) + ".geojson", "w")
+            try:
+                out.write(soup.get_text())
+            except UnicodeEncodeError:
+                print("Failed to write to file " + page + ".geojson. Try downloading the file manually.")
+                unicodeErrors.append(page)
+            out.close()
         
 print("Done! Paste any errors in the Notes section of the spreadsheet.")
 if len(loadErrors) > 0:
