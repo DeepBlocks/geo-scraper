@@ -35,10 +35,12 @@ for result in data["results"]:
     fileURL = "https://" + domain + "/api/geospatial/" + result["resource"]["id"] + "?method=export&format=GeoJSON"
     fileName = cleanName(name) + ".geojson"
     
-    r = requests.get(fileURL)
-    if len(r.content) > 53:
-        print(name)
-        with open(path + fileName, 'wb') as f:
-                f.write(r.content)
+    if not exists(path + fileName):
+        r = requests.get(fileURL)
+        if len(r.content) > 53:
+            print(name)
+            with open(path + fileName, 'wb') as f:
+                    f.write(r.content)
+            f.close()
 
 print("Done!")
