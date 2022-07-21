@@ -20,35 +20,15 @@ The arcgis scraper should work for most websites that run on arcgis.
 4. Click on "View Data Source," then click on the "View" button next to GeoJSON
 ![](/assets/images/view-storage.png)
 5. At the top, click Home and copy the URL
-6. Download arcgis-scraper.py from Releases and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
-    - Windows: Right click the program, then hover over "Open with" and click Notepad
-    - Mac: Right click the program, then hover over "Open with" and click TextEdit
-![](/assets/images/releases.png)
-7. Change `url` to the new URL you just got (make sure to keep the quotation marks and the / after `services`)
-8. Change `path` to fit your needs
-9. Open command prompt (if on Windows) or terminal (if on Mac)
-10. Type `cd Downloads/`
-11. Type `python arcgis-scraper.py` and wait for the program to output `Done!`
-12. Copy the new folder into the shared Google Drive
-13. If there is an error message, copy the error messages, double click the "Notes" column in the Google Sheets, and paste the error message
+6. Download arcgis-scraper.py and run it
+7. Input the city name and the URL when asked
+    - Input the city name as city_st (e.g. las_vegas_nv)
 
 ## Opendata Scraper
 The opendata scraper should work for most websites that use the Open Data Network (typically the URL would start with data e.g. [data.oaklandca.gov](https://data.oaklandca.gov/))
 
 ### Instructions
-1. Download opendata-scraper.py from Releases and open it with a text editor (DO NOT JUST CLICK OR DOUBLE CLICK ON IT)
-    - Windows: Right click the program, then hover over "Open with" and click Notepad
-    - Mac: Right click the program, then hover over "Open with" and click TextEdit
-![](/assets/images/releases.png)
+1. Download opendata-scraper.py
 2. Copy the URL excluding https:// and any slashes (i.e. only copy data.example.com, not https://data.example.com/pages)
-3. In the code, change `domain` to the URL you copied
-4. Change `path` to your path
-5. Open command prompt (if on Windows) or terminal (if on Mac)
-6. Type `cd Downloads/`
-7. Type `python opendata-scraper.py`
-8. Copy the new folder into the shared Google Drive
-
-## How to tell if a site is arcgis or opendata
-Click on the search field. If the word "Data" appears underneath, then the site likely uses arcgis.
-![](/assets/images/search.png)
-This site uses arcgis because the word "Data" appears.
+3. Run the program and input the city name and URL when asked
+    - Input the city name as city_st (e.g. las_vegas_nv)

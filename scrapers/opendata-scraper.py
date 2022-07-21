@@ -1,10 +1,12 @@
 # Parameters: modify these variables to fit your purpose
 
-domain = "data.buffalony.gov"
-
 # Path is likely C:/Users/[Username]/Downloads/[city_state]/ for Windows
 # or ~/Downloads/[city_state]/ for Mac
-path = "G:/.shortcut-targets-by-id/1CkRPe_N3e73wuPKr6tl12-tzk-yT4IkB/13 2022 Summer Internship/GIS Data/buffalo_ny/"
+print('Name of city (city_st):')
+path = input() + '/'
+
+print('Domain:')
+domain = input()
 
 # Warning: Do not modify anything below this line unless you know what you are doing!
 
@@ -12,11 +14,14 @@ import json
 import requests
 import os
 
+os.chdir(os.path.dirname(__file__))
+
 if not os.path.exists(path):
         os.makedirs(path)
 
 url = "http://api.us.socrata.com/api/catalog/v1?domains=" + domain + "&search_context=" \
     + domain + "&only=maps"
+print(url)
 
 def cleanName(name):
     name = name.replace('<', "%3C")
@@ -35,12 +40,11 @@ for result in data["results"]:
     fileURL = "https://" + domain + "/api/geospatial/" + result["resource"]["id"] + "?method=export&format=GeoJSON"
     fileName = cleanName(name) + ".geojson"
     
-    if not exists(path + fileName):
-        r = requests.get(fileURL)
-        if len(r.content) > 53:
-            print(name)
-            with open(path + fileName, 'wb') as f:
-                    f.write(r.content)
-            f.close()
+    r = requests.get(fileURL, timeout=300)
+    if len(r.content) > 53:
+        print(name)
+        with open(path + fileName, 'wb') as f:
+                f.write(r.content)
 
-print("Done!")
+print("Done! Press Enter to continue...")
+input()
