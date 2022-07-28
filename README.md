@@ -20,7 +20,8 @@ The arcgis scraper should work for most websites that run on arcgis.
 4. Click on "View Data Source," then click on the "View" button next to GeoJSON
 ![](/assets/images/view-storage.png)
 5. At the top, click Home and copy the URL
-6. Download arcgis-scraper.py and run it
+6. Download arcgis-scraper.py from releases and run it
+![](/assets/images/releases.png)
 7. Input the city name and the URL when asked
     - Input the city name as city_st (e.g. las_vegas_nv)
 
@@ -28,7 +29,13 @@ The arcgis scraper should work for most websites that run on arcgis.
 The opendata scraper should work for most websites that use the Open Data Network (typically the URL would start with data e.g. [data.oaklandca.gov](https://data.oaklandca.gov/))
 
 ### Instructions
-1. Download opendata-scraper.py
+1. Download opendata-scraper.py from releases
+![](/assets/images/releases.png)
 2. Copy the URL excluding https:// and any slashes (i.e. only copy data.example.com, not https://data.example.com/pages)
 3. Run the program and input the city name and URL when asked
     - Input the city name as city_st (e.g. las_vegas_nv)
+
+## How to tell if a site is arcgis or opendata
+Click on the search field. If the word "Data" appears underneath, then the site likely uses arcgis.
+![](/assets/images/search.png)
+This site uses arcgis because the word "Data" appears.
